@@ -241,7 +241,22 @@ a {
   gap: var();
 }
 
-.bordering-content {
+.overlay {
+  position: fixed;
+  height: 100vh;
+  width: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  backdrop-filter: blur(3px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  font-size: 30px;
 }
-.bordering {
+
+.hidden {
+  display: none;
 }

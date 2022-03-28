@@ -3,16 +3,28 @@ const searchInput = document.querySelector('#search-input')
 const countriesEl  = document.querySelector('.countries')
 const selectReg = document.querySelector('#select')
 const api = 'https://restcountries.com/v3.1/all'
+const overlay = document.querySelector('.overlay')
 
-// asking data fro server 
+
+overlay.addEventListener('click', ()=> {
+    overlay.classList.add('hidden')
+    overlay.textContent = `Loading...`
+    searchInput.value = ''
+    console.clear();
+})
+
+// asking data fro serve=r 
 async function sendReq(url) {
+    overlay.classList.remove('hidden')
     const req = await fetch(url)
     const data = await req.json()
     console.log(data);
     showContent(data)
 }
 
+
 const showContent = (countries)=> {
+    overlay.classList.add('hidden')
     countries.forEach((country)=> {
         const countryDiv = document.createElement('div')
         countryDiv.classList.add('country')
