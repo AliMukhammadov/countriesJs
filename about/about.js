@@ -3,67 +3,56 @@ const urlParams = new URLSearchParams(queryString)
 const country = urlParams.get('name');
 const api = `https://restcountries.com/v3.1/name/${country}`
 const darkModeBtn = document.getElementById('darkmode-button')
-const contryDetImg = document.querySelector('.country-img')
-const countryPrimTitle = document.querySelector('.primary-title')
+const overlay = document.querySelector('.overlay')
+const countryInfoCont = document.querySelector('.country-info-container')
 
-darkModeBtn.addEventListener('click', ()=> {
-    document.body.classList.toggle('dark')
-})
 
-async function sendReq(url) {
-    const req = await fetch(url)
-    const data = await req.json()
-    showContent(data)
-} 
+// async function sendReq(url) {
+//     const req = await fetch(url)
+//     const data = await req.json()
+//     // overlay.classList.remove('hidden')
+//     showContent(data)
+// } 
 
-sendReq(api)
+fetch(api).then((country) => {
+    showContent(country)
+    return country.json()
+}).then(aboutCountry)
 
-const showContent = (country) => {
-    contryDetImg.src = `${country[0].flags.svg}`
-    countryPrimTitle.textContent = `${country[0].name.common}`
-    console.log(country);
-    infoDetails.classList.add('country-info-container')
-    infoDetails.innerHTML = `
-    <div class="country-info-details">
-    <img class="country-img" src="" alt="" width="560" height="485">
-    <div class="primary-info">
-        <h1 class="primary-title"></h1>
-        <div class="primary-divider">
-            <p class="primary-message">
-                <span class="highlight">Official name:</span>
-            </p>
-            <p class="primary-message">
-                <span class="highlight">Population:</span>
-            </p>
-            <p class="primary-message">
-                <span class="highlight">Region:</span>
-            </p>
-            <p class="primary-message">
-                <span class="highlight">Subregion:</span>
-            </p>
-            <p class="primary-message">
-                <span class="highlight">Capital:</span>
-            </p>
-        </div>
-    </div>
-    <div class="secondary-info">
-        <p class="secondary-message">
-            <span class="highlight">Start of week:</span>
-        </p>
-        <p class="secondary-message">
-            <span class="highlight">Currencies:</span>
-        </p>
-        <p class="secondary-message">
-            <span class="highlight">Languages:</span>
-        </p>
-        
-        <div class="bordering-countries">
-            <p class="bordering-content">
-                <span class="highlight">Border countries:</span>
-            </p>
-            <ul class="bordering"></ul>
-      </div>
-    </div>
-</div>
-    `
+
+function showContent(country) {
+    // overlay.classList.add('hidden')
+    // contryDetImg.src = `${country[0].flags.svg}`
+    // countryPrimTitle.textContent = `${country[0].name.common}`
+    // console.log(country);
+    // document.querySelector('.off_name').textContent = country[0].name.common
 }
+
+function aboutCountry(country) {
+    console.log(country);
+    document.querySelector('.primary_title').textContent = `${country[0].name.common}`
+    document.querySelector('.country-img').setAttribute('src', country[0].flags.svg)
+    document.querySelector('.off_name').textContent = `${country[0].name.common}`
+    document.querySelector('.population').textContent = `${country[0].population}`
+    document.querySelector('.region').textContent = `${country[0].region}`
+    document.querySelector('.subregion').textContent = `${country[0].subregion}`
+    document.querySelector('.capital').textContent = `${country[0].capital}`
+    document.querySelector('.week_start').textContent = `${country[0].startOfWeek}`
+    document.querySelector('.currencies').textContent = `${country[0].currencies}`
+    document.querySelector('.languages').textContent = `${country[0].languages[[0]]}`
+    document.querySelector('.border_countries').textContent = `${country[0].border}`
+}
+
+
+// events
+// overlay.addEventListener('click', ()=> {
+//     overlay.classList.add('hidden')
+//     overlay.textContent = `Loading...`
+//     searchInput.value = ''
+//     console.clear();
+// })
+
+
+// darkModeBtn.addEventListener('click', ()=> {
+//     document.body.classList.toggle('dark')
+// })
